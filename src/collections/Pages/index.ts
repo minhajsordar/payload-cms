@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { superAdminOrTenantAdminAccess } from '@/collections/Pages/access/superAdminOrTenantAdmin'
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Archive } from '../../blocks/ArchiveBlock/config'
@@ -24,10 +25,14 @@ import {
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
   access: {
-    create: authenticated,
-    delete: authenticated,
-    read: authenticatedOrPublished,
-    update: authenticated,
+    create: superAdminOrTenantAdminAccess,
+    delete: superAdminOrTenantAdminAccess,
+    read: () => true,
+    update: superAdminOrTenantAdminAccess,
+    // create: authenticated,
+    // delete: authenticated,
+    // read: authenticatedOrPublished,
+    // update: authenticated,
   },
   // This config controls what's populated by default when a page is referenced
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
@@ -55,7 +60,7 @@ export const Pages: CollectionConfig<'pages'> = {
         collection: 'pages',
         req,
       }),
-    useAsTitle: 'title',
+    // useAsTitle: 'title',
   },
   fields: [
     {
